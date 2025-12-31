@@ -1,10 +1,11 @@
 import torch
 from torch.utils.data import Dataset
 
-class SimpleDataset(Dataset):
+class StudentDataset(Dataset):
     def __init__(self):
-        self.x = torch.tensor([[1.0], [2.0], [3.0], [4.0]])
-        self.y = 3 * self.x + 2
+        # Normalize inputs (VERY IMPORTANT)
+        self.x = torch.tensor([[30.], [40.], [50.], [60.], [70.], [80.], [90.]]) / 100.0
+        self.y = torch.tensor([[0.], [0.], [0.], [1.], [1.], [1.], [1.]])
 
     def __len__(self):
         return len(self.x)

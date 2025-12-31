@@ -1,26 +1,33 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from dataset import SimpleDataset
+from dataset import StudentDataset
 
-dataset = SimpleDataset()
+dataset = StudentDataset()
 loader = DataLoader(dataset, batch_size=2, shuffle=True)
 
 model = nn.Linear(1, 1)
-loss_fn = nn.MSELoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
-for epoch in range(200):
+
+loss_fn = nn.BCEWithLogitsLoss()
+
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+
+for epoch in range(300):
     for x, y in loader:
-        y_pred = model(x)
-        loss = loss_fn(y_pred, y)
+        logits = model(x)
+        loss = loss_fn(logits, y)
 
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
     if epoch % 50 == 0:
-        print(f"Epoch {epoch}, Loss {loss.item()}")
+        print(f"Epoch {epoch}, Loss {loss.item():.4f}")
 
-print("Final Weight:", model.weight.item())
-print("Final Bias:", model.bias.item())
+
+with torch.no_grad():
+    test_score = torch.tensor([[0.65]])  # NOT 65.0
+    prob = torch.sigmoid(model(test_score))
+    print("Pass probability:", prob.item())

@@ -1,0 +1,4 @@
+Machine learning is a field of AI that allows systems to learn from data.
+Deep learning uses neural networks with many layers.
+Transformers use self-attention to process sequences.
+Embeddings convert text into numerical vectors.
