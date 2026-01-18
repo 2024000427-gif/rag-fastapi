@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from rag_core import run_rag
+from rag_core_faiss import run_rag
+
 
 app = FastAPI(title="RAG API")
 
